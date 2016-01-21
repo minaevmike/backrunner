@@ -1,0 +1,353 @@
+backrunner (0.1.0ubuntu2) utopic; urgency=medium
+
+  * add debian
+
+ -- root <root@wks-minaev>  Tue, 01 Dec 2015 16:24:51 +0300
+
+backrunner (0.1.0ubuntu1) utopic; urgency=medium
+
+  [ Evgeniy Polyakov ]
+  * Initial backup proxy commit
+  * proxy: implemented upload
+  * Updated /upload/ handler, implemented /delete/ handler
+  * delete: added initial implementation of the backrunner background deletion process
+  * buckets: added buckets delete metadata and common buckets constants
+  * proxy: use custom string as delete index, use external buckets constants, fixed returned get/update/delete URL schema
+  * delete: implemented bucket metadata read, 'delete' index iteration and deletions of the objects whose 'deletion' time had passed
+  * Added gitignore and bucket example jsons
+  * gitignore: import gitignore file
+  * proxy: added address parameter
+  * readme: initial import
+  * proxy: added remote/listen addresses to command line parser
+  * readme: added number of copies note
+  * readme update
+  * readme update about backup overwrite
+  * proxy: added empty ping handler
+  * proxy: switched to new URL scheme, added optional backup parameter which forces proxy to create backups, by default proxy does not create backup
+  * buckets: updated bucket list
+  * buckets: added acl json parser, moved common buckets code to buckets.go
+  * auth: added 'input' auth support (see rift documentation) - auth checks upload/delete handlers, but doesn't yet sign own operations to storage
+  * proxy: check that delete handler gets properly formed URL
+  * backrunner: added full upload/delete (re)authorization support
+  * proxy: added more logs
+  * proxy: get rid of backup option
+  * proxy: get rid of default remote address
+  * proxy: added possibility to specify multiple remote addresses. The first one is used yet.
+  * proxy: switched to riftv1 authorization method
+  * proxy: get rid of delete bucket, removed proxy_request and send(). Added rift reply parser. Its a project reset, next add new bucket selection algorithm
+  * test: updated bucket name to what is used in rift examples
+  * proxy: minor cleanups, get rid of useless debug
+  * proxy: added timeout handlers, added fine-tuned Transport
+  * eproxy: added more debug
+  * proxy: returned /ping/ handler
+  * buckets: removed unneeded empty line
+  * delete: get rid of postponed deletion logic through secondary indexes
+  * buckets: renamed metadata parser from old 'delete' name
+  * meta: get rid of unused deletion index
+  * Renamed to shorted bmeta.go
+  * bucket: switched to new bucket control structure
+  * bucket: added rate based weighted random bucket selection
+  * bucket: return bucket stat json in /ping/ handler
+  * buckets: added packets counter, last update time and moving exponential average to calculate rate
+  * buckets: use atomic packets update, decrease rate immediately, grow it slowly via ewma
+  * ping: return json error in /ping/ handler, if it failed
+  * buckets: always use ewma when setting rates
+  * Indentation cleanups
+  * buckets: explicitly set emwa time diff to seconds
+  * buckets: simplified weighted random selection
+  * proxy: half rate after upload error has been received
+  * bucket: initial per-backend bucket stats implementation
+  * backrunner: switched to new architecture. So far only RIFT transport has been implemented
+  * backrunner: added initial elliptics transport implementation
+  * log: added log prefix config option
+  * elliptics: use new AddRemotes() method to add array of remote addresses in parallel
+  * elliptics: use log_file variable instead of plain file for logger
+  * backrunner: switched to pure elliptics proxy implementation
+  * bucket example update
+  * errors: use embedded KeyError data and status for higher-level errors
+  * bucket: fixed ACL extraction
+  * errors: must operate on 'error' interface, not its pointer
+  * etransport: added Get() method
+  * errors: operate on error pointer like described in golang tour
+  * bucket: use named constants for errno codes not numbers like -6 and -2
+  * proxy: added fallback error hadler if path could not be parsed to existing handlers
+  * etransport: parse http request and set ioflags/cflags/trace_id when needed
+  * elliptics: switched read/write functions to use []byte instead of string to avoid unneeded copies
+  * bucket: added bucket/nobucket upload handlers
+  * bucket: added parallel lookup
+  * proxy: added parallel lookup handler, made handler checks more generic
+  * errors: elliptics->go error translator
+  * errors: fixed typo
+  * backrunner: switched to v2.26 logger/node implementation. Write/Lookup methods return json.
+  * proxy: fixed req.Body leak
+  * rift: defer cloned request body close
+  * bucket: do not print whole json stat received from proxy
+  * rift: always return status in transport.Response
+  * rift: fixed typo
+  * proxy: remote already contains schema
+  * rift: remote already contains schema
+  * transport: heavily rise idle timeout to 50 seconds
+  * rift: indent cleanup
+  * proxy: added path format check
+  * proxy: fixed typo
+  * proxy: fixed /handler/bucket/key split
+  * ell: get rid of old unused gologger pieces
+  * config: use info log level in example
+  * transport: get rid of unused import
+  * proxy: implemented generic map of strings-to-handlers
+  * proxy: increase idle timeout to 50 seconds by default
+  * elliptics: switch to io.Reader upload interface
+  * bucket: export bucket meta/acl structures and fields, made simpler API for others to use
+  * bucket: updated creation example
+  * bucket: added bucket metadata update/read helper application and a bunch of needed methods to create meta from json, pack and upload it
+  * etransport: added size/offset to read/write methods
+  * elliptics: switched to streaming interface
+  * elliptics: added trace/request id
+  * auth: return wildcard '*' user if auth header is not present or contains garbage
+  * bucket: added auth read/write flags and check them during operation. If auth flags in bucket do not allow operation, return forbidden error
+  * bucket: skip auth if special ACL flag is set
+  * bucket: fixed typo
+  * proxy: fixed handler parser, it lead to always writing single key with bucket name for all data
+  * proxy: fixed typo
+  * proxy: added comment about handler params
+  * Implemented /delete/ method
+  * bucket: added bulk deletion, fixed several key error setups
+  * indent: long lines cleanup
+  * proxy: added /stat/ handler and cleaned up backend info
+  * lookup_serialize: return error if there were no positive write/lookup results at all
+  * bucket: return stat json in sections storage and buckets
+  * bucket: pack additional 3 reserved fields in metadata structure to match c++/rift code
+  * errors: updated elliptics-to-http error switch
+  * stat: save previous statistics and properly handle /stat/ request
+  * bucket: return random bucket if BPS sum is small (zero)
+  * stat: fixed typos
+  * test: added backrunner test subsystem
+  * btest/elliptics: reduce number of various elliptics server threads
+  * test/btest: added delete/bulk-delete test
+  * bucket: added size/offset URI parsing into Stream method
+  * test: added correctness check of the uploaded/downloaded content
+  * bucket: added offset/size URI params to all upload/get handlers
+  * proxy: use decoded uri (i.e. for example in russian) for keys
+  * test: added utf8 uri into upload/download test
+  * test/elliptics: added blob size limit config parameter
+  * btest: enable eblob size check
+  * bucket: update global statistics one per 10 seconds, cache it and force /stat/ to grab it from local buckets. Get rid of old bucket selection algorithm. Added locks to protect bucket stat update.
+  * bucket: added back-buckets, these buckets are not used fo /nobucket_upload/ balancing, but must be explicitly specified by client
+  * bctl: move bctl related code into separate file
+  * bucket: added msgpack metadata String() method. ReadBucket() log cleanup.
+  * bctl: update bucket list on SIGHUP signal
+  * bctl: added periodic all-buckets-meta reread
+  * proxy: added duration of the handler execution
+  * stat: cached stat race fixed, do not cache at proxy level, elliptics caching is enough
+  * test: updated test to latest elliptics-go version (groups: int32 -> uint32), added bucket update test (bucket which was not present in bucket file)
+  * test: added periodic bucket update test
+  * test: added operation counter statistics test
+  * test: added SIGHUP signal bucket list update
+  * test: print start/complete strings for every test
+  * proxy: turn on all (not only positive) upload results
+  * reply: added missing files
+  * stat: added stat time into result json
+  * test: synced server start code with upstream elliptics, it requires blackhole logger rotation option
+  * test: implemented backend control test
+  * test: reduce test blob size limit to 40mb
+  * test: do not set 'disable size check' blob config bit
+  * test: elliptics server starts with all backends having random blob_size_limit from 60 to 160 Mb
+  * test: added uniform-write test (it fails because proxy doesn't support it yet) and minimum available space ratio
+  * test: renamed init/start functions
+  * config: moved elliptics config into part of the global config, which will also contain proxy related bits
+  * config: added 2.25/2.26 elliptics config parsers and generators
+  * config: extend proxy config, add ProxyClientConfig session and use it for proxy tunables like bucket update interval, min available space ratio and so on
+  * proxy: update proxy config on signal and use those timers (updated) for bucket/stat updates
+  * bucket: fixed msgunpack type cast, use ACL version 2, it is correct ACL version number, old bucket metadata must be upgraded
+  * meta: updated to the latest API changes (use ProxyConfig class)
+  * config: added example json config
+  * config: added proxy listen address into config. Removed command line argument.
+  * proxy: added list of allowed method for each registered handler
+  * bucket: use safe msgpack extractor which doesn't panic when can not convert numeric values
+  * test: use address from ProxyConfig structure, save cofig into test structure, get rid of unused 'remote' when setting up test environment
+  * lookup: when parsing write/lookup replies return not interface{}, but corrent lookup structure
+  * proxy: added /redirect/ handler. Nginx eblob streaming module should be updated to new URI and auth
+  * proxy: do not send error in handler, use generic handler to send error - it is on one place and error can not be missed
+  * redirect: changed redirect URL, put elliptics parameters into headers, sign packet including those parameters too
+  * redirect: added timeout while signature is valid, it is used in signature generation, streaming module should not return data after this timeout has passed
+  * redirect: randomly select server to redirect request to
+  * redirect: added redirect root, when set, returned filename is modified to be relative to root
+  * proxy: implemented PID control, fixed stat update
+  * bucket: return DnetError in lookup result, not generic error
+  * bucket: return DnetError in lookup result, not generic error
+  * test: added failed write test: write into bucket with nonexisting group, check that reply contains that group
+  * test: uniform write test should check all buckets and that their rates are withing soft/hard limits (with some caveats mentioned in comments)
+  * test: write started/completed status into every log: server, proxy, backrunner client
+  * bucket: added probabilistic bucket selection based on ranges inverse proportional to its pain
+  * bucket: if there are no buckets to select from, do not start probabilistic selection algo
+  * test: added backend slowdown test
+  * bucket: increased write error pain to the soft level of no-free-space
+  * bucket: if write failed completely, i.e. there are no success groups, run over all bucket groups and add them write-error-pain
+  * bucket: when there is backend error in stats, update pain accordingly
+  * bucket: when selecting bucket consider those which have groups but do not have stats for them as quite bad and add them appropriate pain
+  * test: added invalid bucket into selection (test_bucket_file_update() adds bucket into file and proxy rereads it)
+  * proxy: added possibility to set permanent headers for every reply from config file, this is needed for GET ajax requests
+  * proxy: get rid of get/upload/del urls, added group/backend into upload reply
+  * redirect: added size/offset URI into redirect handler
+  * PID: write error pain should be higher than no-free-space soft limit
+  * proxy: replace ping handler with stat one - they send the same data
+  * proxy: get rid of config variable, use config from bctl, where it can be updated by signal
+  * bucket: added automatic defragmentation scanning and starting
+  * stat: get rid of interface{} stat API, use structures instead.
+  * stat: check total number of keys in group and if they do not match in bucket mark it is 'need-to-be-recovered'. There are 2 recovery types: whole-group when there is no group and dc when number of keys differ.
+  * test: updated backend delay test - numbers should return to uniform after delay has been returned to zero
+  * test: fixed command stats test to match current stat structures layout
+  * bucket: added url/content length log into bucket selection
+  * test: added 'last-chance' in uniform test case - sleep and get a chance for defragmentation
+  * test: uniform test should sleep long enough between writes to allow stats to be updated
+  * bucket: simplify weighted random bucket selector, make ranges smaller - select buckt when sum is more than 10.
+  * bucket: prevent zero-length upload before sending data to elliptics and updating bucket pain
+  * test: backend slowdown test should use more writes to probabilistically determine that number of writes into slow backend matches. Decrease size of the written keys in bulk delete test.
+  * config: added cache option and call tree timeout monitoring option
+  * gen: added backend type, fixed backend array collection
+  * proxy: added nginx crossdomain handling, this is a temporal solution
+  * proxy: use dockerized /etc/ dir for crossdomain.xml
+  * bucket: send defragmentation requests without holding bctl lock
+  * bucket: added runtime profiling, do not read bucket metadata under lock
+  * proxy: log content length into final processing string
+  * bucket: when updating bucket pain stats after upload has been completed, use fast FindStatBackend() method using provided address+backend pair, not slower session+key+group
+  * bucket: dump periodic profile into mounted docker directory
+  * proxy: temporarily comment read/write http server timeouts
+  * bucket: penalize bucket with read-only group when selecting one for writing
+  * proxy: added common request handler, it reads data from local disk if url path doesn't match any registered handler. It reads data relative to @root config option. Also added test. Profile is now stored in the @root directory and can not be read via HTTP
+  * proxy: use slice instead of map for handlers to preserve lookup order
+  * bucket: fixed bucket metadata+stat update - after metadata has updated, bucket doesn't yet contain any stat info and bucket selection algorithm penalizes all buckets, which means random selection without free space and performance checks
+  * bucket: read all buckets metadata on startup
+  * disable defrag
+  * disable stats
+  * proxy: always return OK to HEAD requests
+  * bucket: remove useless rlock/runlock
+  * bucket: remove useless rlock/runlock
+  * bucket: disable stat-based bucket selection
+  * proxy: disable pain update on upload completion
+  * bucket: allow sighup signal
+  * test: connect proxy stdout/stderr to buffers and print them on exit
+  * bucket: turn on periodic bucket/stat update, cleeaned config reading locking
+  * bucket: turn on stat-based bucket selection
+  * defrag: scan buckets under read-lock
+  * bucket: stop stat-based bucket selection
+  * defrag: turn off defrag scanning
+  * bucket: turn on upload stat update and stat-based bucket selection
+  * test: added backend control/status test
+  * buceket: since PID controller is safe for parallel update, we can run it under read-lock and do not block upload fast path
+  * defag: turn on automatic defragmentation
+  * defrag: free/used space debug added
+  * defrag: more debug
+  * defrag: do not check buckets with error backends
+  * bucket: added utilization debug
+  * lookup: added Addr field, it contains address of the node reply has been received from, it can differ from @Server because of forwarding, also @Server is not set when there is error
+  * test: run big upload test multiple times
+  * readme: updated to the latest doc
+  * bucket: do not select buckets with no free space (even less than just soft limit) if there are buckets with free space (and no errors, since error and RO pains are more than free-space-soft pain)
+  * config: added localhost:1025 into example config
+  * test: increase backend size limit to 200+random MBs, some tests fail because of lack of free space
+  * elliptics: use new ioflags/cflags/traceid types
+  * bucket: when free space is less than soft limit, add proportional part to the pain. Fixed soft pain remains the same.
+  * bucket: when calculating free space ratio, get into account amount of available space, not only backend-used-size
+  * etransport: elliptics uses own logger now, not golang one, provide filename for it
+  * bucket: use old stats if new update didn't bring new data (there was a timeout for some group for example)
+  * defrag: do not add bucket into defrag list if removed/free space rates are more than 1, this is a bug, it happens when stats are invalid, do not count such buckets
+  * defrag: print used/removed sizes when adding new bucket into defrag list
+  * bucket: cleanup bucket selection logs
+  * bucket: do not print group index when there is no group stat
+  * bucket: increase free space pain, we should write more into free buckets
+  * bucket: when facing empty stats for some reason, set PainNoStats for them
+  * elliptics: set default timeout to 30 seconds
+  * config: reinit logfile on signal
+  * proxy: replaced handlers array with map or handler pointers
+  * proxy: added rps/bps estimator
+  * proxy: implemented correct rps/bps estimator
+  * bucket: updated pains, read all buckets metadata on signal
+  * proxy: added remote client address into access log message
+  * proxy: print client log and x-forwarded-for header in access log
+  * bucket: fixed bucket selection - to find proper backend via key lookup in the route table, one has to set namespace. Cleaned up find-bucket/update-bucket logs.
+  * estimator: update cached value even when reading it. This fixes issue when there are no handler calls, in this case estimator always returns old cached value. docker: added docker build file
+  * Session has Delete() method, it must be called to free memory, allocated by elliptics core.
+  * proxy: fixed spelling
+  * Added some debug infos into dockerfile
+  * docker: print branch refs after it has been updated
+  * estimator: only update size if it is positive, adjust rps/bps by real estimator time, not constant interval
+  * estimator: when calculating rps/bps, do not forget that UpdateTime is 'start' time + EstimatorInterval, not just 'start' time, thus we have to add EstimatorInterval to duration used for calculus
+  * proxy: fixed config load error string
+  * session: added key transformation log, trace-id and url into all handlers
+  * dockerfile: added version check and go update if needed
+  * ell: set 10 seconds timeout for stat request
+  * bucket: increase pain for bucket where group is missing for some reason, change bucket processing logs
+  * bucket: synced with upstream elliptics-go code which doesn't provide backends with errors anymore
+  * bucket: added discrepancy pain calculus - the more inner bucket record discrepancy, the higher pain is added to this bucket
+  * bucket: remove NeedRecovery bucket string, it is not used
+  * bucket: when calculating record discrepancy pain for bucket, run over all backends and sum up total number of records. It is needed for groups where multiple address+backend entries are used, and distribution of keys among backends can differ from group to group.
+  * bucket: returned back stat error check, print failed buckets when could not find any bucket
+  * bucket: increase free space pain to force selecting buckets with more free space
+  * bucket: use gopkg host for msgpack import
+  * bucket: fixed race between bucket list and stat update on signal. Backrunner rereads proxy and bucket config files and updates all stats on timeout now.
+  * docker: use plain trusty image and build backrunner based on it
+  * docker: fixed typo
+  * proxy/config: added TLS support
+  * proxy: returned idle timeout in server's transport
+  * bucket: close old log file before opening the new one on signal
+  * elliptics: logfile should be WriteCloser interface to allow closing. Get rid of unused logger interface
+  * proxy: disable read/write socket timeouts
+  * defrag: skip backends with zero size limit - this means there is no statistics
+  * docker: use newer go version and export additional SSL port
+  * bucket: print addr/backend data and only for top 5 buckets
+  * docker: updated dockerfile, use latest go version, added commented out instructions to build golang from sources
+  * buckets: removed bucket files from version control
+  * bucket: use bulk bucket meta update
+  * bmeta: if there is no 'buckets' section, return error
+  * config: updated example config
+  * bctl: when reading config, store its content and some meta (timestamp, hostname) into elliptics meta namespace/groups in hostname.ReadConfig key
+  * defrag: run in own goroutine, do not abuse stat reading
+  * bctl: do not print config, it contains secure token, print config/stat update intervals and start time
+  * config: added useful build variables, export them via config metadata
+  * bctl: explicitly set content type for keys which have suffixes listed un config file
+  * Get rid of unused files
+  * config: added example content type map
+  * bctl: protect read-only config maps to prevent update race
+  * proxy: added array of last errors which is accesible via /proxy_stat/ handler
+  * proxy: skip proxy stat rps/bps entries without useful data i.e. where rps/bps are zeroes
+  * Revert "proxy: skip proxy stat rps/bps entries without useful data i.e. where rps/bps are zeroes"
+  * meta: do not print bucket metadata if there is an error
+  * docker: install make, it is needed to build backrunner
+  * bctl: log successful config metadata update
+  * make: use bash: shell: command not found to run shell commands, not bash
+  * docker: write Europe/Moscow into /etc/timezone file to set correct timezone
+  * estimator: use exponentially weighted moving average for rps/bps
+  * estimator: set update time
+  * estimator: use ftime as a boundary when we should explicitly start to decrease rps/bps metrics
+  * estimator: update time when rps/bps metrics got zeroes to decline
+  * estimator: fixed rps/bps to actually be accumulating counters, not plain averages
+  * estimator: use plain mutex, we only locked it for writing
+  * bctl: added reader/writer IO flags into config, use them for common operations
+  * bctl: added reader/writer IO flags into config, use them for common operations
+  * config: added reader/writer IO flag examples into local config
+  * proxy: added error time string to make it more human readable
+  * proxy: switched to json marshalling interface
+  * makefile: get rid of special linux build
+  * bctl: move profile dump into own function
+  * bctl: add parameter to dump profile into file with current date/time suffix
+  * proxy: added /exit/ handler which dumps profile and exits
+  * docker: use ubuntu image
+  * bctl: export bucket ctl stats
+  * bctl: added current time into bucket ctl stats, since backrunner may be running in container, do not return error from stat gathering function
+  * proxy: put bucket ctl stat into /proxy_stat/ handler
+  * docker: update timezone after all packages have been upgraded, otherwise tzdata update overrides current settings
+  * makefile: put timezone into build date string
+  * bucket: put config update date into bucket ctl stat
+  * bucket: set mix-states IO flag if there are no buckets being defragmented
+  * bctl: reading methods (Get/Stream) can handle error replies, get them all
+  * make: added install target
+  * make: build bmeta binary too, install backrunner/bmeta by building and then copying binaries
+  * bucket: added API to dump profiles into io.Writer, dump multiple profiles (goroutine/heap/threadcreate)
+  * proxy: added /profile/ handler similar to https://golang.org/pkg/runtime/pprof, but dump all profiles at once
+  * error: error: use new elliptics.DnetCode() instead of DnetStatus() to fix ambiguous status transformation, it returns http status correctly now
+  * Add cmake
+
+  [ root ]
+
+ -- root <root@wks-minaev>  Tue, 01 Dec 2015 16:19:37 +0300
