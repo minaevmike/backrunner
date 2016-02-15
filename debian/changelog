@@ -1,3 +1,12 @@
+backrunner (0.2.18ubuntu1) utopic; urgency=medium 
+  
+  * New versioning scheme
+  * bucket: penalize bucket if current route table doesn't have entry for requested group
+  * docker: increase base version and go version
+  * elliptics-go: increase channel sizes to fix async c++ calls which synchronously invoke callbacks
+
+ -- Vitaly Isaev <vitalyisaev2@gmail.com>  Mon, 15 Feb 2015 16:43:51 +0300
+
 backrunner (0.1.0ubuntu2) utopic; urgency=medium
 
   * add debian
